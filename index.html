@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <script
+      src="https://kit.fontawesome.com/cf55f16a65.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="to__do-list">
+        <div class="title">
+          <h1 class="title__text">My to do list!</h1>
+          <i class="fa-solid fa-pencil"></i>
+        </div>
+        <div class="menu">
+          <div class="menu__wrapper">
+            <button class="button active" data-type="all">All</button>
+            <button class="button" data-type="inprogress">In progress</button>
+            <button class="button" data-type="completed">Completed</button>
+          </div>
+        </div>
+
+        <form action="#" class="input__wrapper">
+          <input type="text" placeholder="Add a task" class="input__text" />
+          <button type="submit" class="btn btn__add">
+            <span class="hide__onmobile show__ontablet">ADD</span>
+            <i class="fa-solid fa-plus show__onmobile hide__ontablet"></i>
+          </button>
+          <button type="submit" class="btn btn__clear">
+            <span class="hide__onmobile show__ontablet">CLEAR</span>
+            <i class="fa-solid fa-trash-can show__onmobile hide__ontablet"></i>
+          </button>
+        </form>
+
+        <div class="list">
+          <ul class="action__list"></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
