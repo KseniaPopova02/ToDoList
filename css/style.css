@@ -16,6 +16,10 @@ body {
   justify-content: space-around;
 }
 
+button {
+  color: #000;
+}
+
 .button {
   background-color: #fff;
   font-size: 18px;

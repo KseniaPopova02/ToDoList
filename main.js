@@ -72,18 +72,11 @@ const renderList = () => {
   list.textContent = "";
 
   items.forEach((item) => {
-    let showItem = true;
-
-    if (listType === "inprogress" && item.isDone) {
-      showItem = false;
-    }
-
-    if (listType === "completed" && !item.isDone) {
-      showItem = false;
-    }
-
-    if (!showItem) {
-      return;
+    if (
+      (listType === "inprogress" && item.isDone) ||
+      (listType === "completed" && !item.isDone)
+    ) {
+      return false;
     }
 
     const li = document.createElement("li");
