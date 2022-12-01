@@ -1,3 +1,25 @@
+// Переписать тудушку:
+
+// 1. Получать туду айтем через GET запрос
+// 2. Удалять туду айтемы через DELETE запрос
+// 3. Создавать через POST
+// 4. Редактировать PUT/PATCH
+
+const URL = "http://localhost:3000/todos";
+
+// const toDoItem = {
+//   isDone: false,
+//   text: "Bread",
+// };
+
+// fetch(URL, {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(toDoItem),
+// });
+
 //variables
 let input, btn, list, form, clearBtn;
 
@@ -47,28 +69,38 @@ const checkedItem = (id, checked) => {
 
 //Render list
 
+// API
+const loadApiStorage = () => {
+  // Piece of code below should be loaded once on page load and the data should be put into your items array
+  fetch(URL)
+    .then((response) => response.json())
+    .then((data) => {
+      items = data;
+      renderList();
+    });
+};
+
 //Local storage
 
-const toLocalStorage = () => {
-  localStorage.setItem("data", JSON.stringify(items));
-};
+// const toLocalStorage = () => {
+//   localStorage.setItem("data", JSON.stringify(items));
+// };
 
-const loadLocalStorage = () => {
-  let rawData = localStorage.getItem("data");
-  if (rawData) {
-    items = JSON.parse(rawData);
-    renderList();
-  }
-};
+// const loadLocalStorage = () => {
+//   let rawData = localStorage.getItem("data");
+//   if (rawData) {
+//     items = JSON.parse(rawData);
+//     renderList();
+//   }
+// };
 
-const deleteLocalStorage = () => {
-  localStorage.clear();
-  items = [];
-  renderList();
-};
+// const deleteLocalStorage = () => {
+//   localStorage.clear();
+//   items = [];
+//   renderList();
+// };
 
 const renderList = () => {
-  toLocalStorage();
   list.textContent = "";
 
   items.forEach((item) => {
@@ -161,5 +193,5 @@ window.addEventListener("DOMContentLoaded", () => {
       renderList();
     });
   });
-  loadLocalStorage();
+  loadApiStorage();
 });
