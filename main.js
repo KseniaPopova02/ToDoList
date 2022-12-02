@@ -1,9 +1,9 @@
 // Переписать тудушку:
 
-// 1. Получать туду айтем через GET запрос
-// 2. Удалять туду айтемы через DELETE запрос
-// 3. Создавать через POST
-// 4. Редактировать PUT/PATCH
+// 1. Get the item using GET request
+// 2. Delete items using DELETE request
+// 3. Create using POST
+// 4. Edit using PUT/PATCH
 
 const URL = "http://localhost:3000/todos";
 
@@ -29,17 +29,22 @@ let listType = "all";
 
 //create function
 const createItem = (text) => {
-  const ids = [
-    0,
-    ...items.map((item) => {
-      return item.id;
-    }),
-  ];
+  // const ids = [
+  //   0,
+  //   ...items.map((item) => {
+  //     return item.id;
+  //   }),
+  // ];
 
-  const max = Math.max(...ids);
+  // const max = Math.max(...ids);
 
-  items.push({
-    id: max + 1,
+  // items.push({
+  //   id: max + 1,
+  //   text: text,
+  //   isDone: false,
+  // });
+
+  toApiStorage({
     text: text,
     isDone: false,
   });
@@ -49,22 +54,28 @@ const createItem = (text) => {
 
 //delete function
 const deleteItem = (id) => {
-  items = items.filter((item) => {
-    return item.id !== id;
-  });
-
-  renderList();
+  // items = items.filter((item) => {
+  //   return item.id !== id;
+  // });
+  // renderList();
+  deleteApiStorage(id);
 };
 
 //checked function
-const checkedItem = (id, checked) => {
-  items.forEach((item) => {
-    if (item.id === id) {
-      item.isDone = checked;
-    }
-  });
 
-  renderList();
+//rewrite in new API way
+const checkedItem = (id, checked) => {
+  // items.forEach((item) => {
+  //   if (item.id === id) {
+  //     item.isDone = checked;
+  //   }
+  // });
+
+  // renderList();
+
+  patchApiStorage(id, {
+    isDone: checked,
+  });
 };
 
 //Render list
@@ -78,6 +89,39 @@ const loadApiStorage = () => {
       items = data;
       renderList();
     });
+};
+
+const toApiStorage = (item) => {
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(item),
+  }).then(loadApiStorage);
+};
+
+const deleteApiStorage = (id) => {
+  fetch(`${URL}/${id}`, {
+    method: "DELETE",
+  }).then(loadApiStorage);
+};
+
+const patchApiStorage = (id, change) => {
+  fetch(`${URL}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(change),
+  }).then(loadApiStorage);
+};
+
+const deleteAllApiStorage = () => {
+  const itemsIdsArray = items.map((item) => item.id);
+  itemsIdsArray.forEach((id) => {
+    deleteApiStorage(id);
+  });
 };
 
 //Local storage
@@ -179,7 +223,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   clearBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    deleteLocalStorage();
+    deleteAllApiStorage();
   });
   //List type button click
   const listTypeBtn = document.querySelectorAll(".menu .button");
